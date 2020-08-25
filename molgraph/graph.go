@@ -6,8 +6,8 @@ import (
 )
 
 type MolecularGraph struct {
-	atoms []Atom
-	bonds [][]float32
+	Atoms []Atom
+	Bonds [][]float32
 }
 
 type Atom struct {
@@ -26,16 +26,16 @@ func DefaultAtom() Atom {
 }
 
 func (graph *MolecularGraph) AddAtom(atom Atom) {
-	graph.atoms = append(graph.atoms, atom)
-	for i := 0; i < len(graph.bonds); i++ {
-		graph.bonds[i] = append(graph.bonds[i], 0)
+	graph.Atoms = append(graph.Atoms, atom)
+	for i := 0; i < len(graph.Bonds); i++ {
+		graph.Bonds[i] = append(graph.Bonds[i], 0)
 	}
-	graph.bonds = append(graph.bonds, make([]float32, len(graph.atoms)))
+	graph.Bonds = append(graph.Bonds, make([]float32, len(graph.Atoms)))
 }
 
 func (graph *MolecularGraph) AddBond(firstAtomIndex, secondAtomIndex int, order float32) {
-	graph.bonds[firstAtomIndex][secondAtomIndex] = order
-	graph.bonds[secondAtomIndex][firstAtomIndex] = order
+	graph.Bonds[firstAtomIndex][secondAtomIndex] = order
+	graph.Bonds[secondAtomIndex][firstAtomIndex] = order
 }
 
 func (graph *MolecularGraph) AddExplicitHydrogens() {
@@ -43,27 +43,27 @@ func (graph *MolecularGraph) AddExplicitHydrogens() {
 		Element: "H",
 		Isotope: -1,
 	}
-	currentAtomIndex := len(graph.atoms)
-	for i := 0; i < len(graph.atoms); i++ {
-		for graph.atoms[i].HCount > 0 {
+	currentAtomIndex := len(graph.Atoms)
+	for i := 0; i < len(graph.Atoms); i++ {
+		for graph.Atoms[i].HCount > 0 {
 			graph.AddAtom(hAtom)
 			graph.AddBond(i, currentAtomIndex, 1)
 			currentAtomIndex++
-			graph.atoms[i].HCount--
+			graph.Atoms[i].HCount--
 		}
 	}
 }
 
 func (graph MolecularGraph) String() string {
 	var str string
-	for i := 0; i < len(graph.atoms); i++ {
-		str += graph.atoms[i].String() + "\n"
+	for i := 0; i < len(graph.Atoms); i++ {
+		str += graph.Atoms[i].String() + "\n"
 	}
 	str += "\n"
-	for i := 0; i < len(graph.atoms); i++ {
+	for i := 0; i < len(graph.Atoms); i++ {
 		str += strconv.Itoa(i+1) + "\t[ "
-		for j := 0; j < len(graph.bonds[i]); j++ {
-			str += fmt.Sprintf("%0.1f", graph.bonds[i][j]) + " "
+		for j := 0; j < len(graph.Bonds[i]); j++ {
+			str += fmt.Sprintf("%0.1f", graph.Bonds[i][j]) + " "
 		}
 		str += "]\n"
 	}
