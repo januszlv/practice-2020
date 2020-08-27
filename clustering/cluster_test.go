@@ -1,4 +1,4 @@
-package clastering
+package clustering
 
 import (
 	"testing"
