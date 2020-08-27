@@ -327,6 +327,10 @@ func bondToOrder(t token) float32 {
 		return 0
 	case minus:
 		return 1
+	case slash:
+		return 1
+	case backslash:
+		return 1
 	case colon:
 		return 1.5
 	case equal:
