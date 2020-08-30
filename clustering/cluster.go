@@ -13,7 +13,7 @@ func TanimotoDistance(tanimotoIdx float64) float64 {
 
 func Cluster(data []float64, nPts int) ([][]int, error) {
 	if len(data) > (nPts * (nPts - 1) / 2) {
-		return nil, errors.New("Distance matrix is too long")
+		return nil, errors.New("Matrix is too long")
 	}
 
 	nbrLists := make([][]int, 14)
