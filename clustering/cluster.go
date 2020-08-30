@@ -7,6 +7,10 @@ import (
 
 const distThresh = 0.7
 
+func TanimotoDistance(tanimotoIdx float64) float64 {
+	return 1 - tanimotoIdx
+}
+
 func Cluster(data []float64, nPts int) ([][]int, error) {
 	if len(data) > (nPts * (nPts - 1) / 2) {
 		return nil, errors.New("Distance matrix is too long")
@@ -17,7 +21,7 @@ func Cluster(data []float64, nPts int) ([][]int, error) {
 	dmIdx := 0
 	for i := 0; i < nPts; i++ {
 		for j := 0; j < i; j++ {
-			dij := data[dmIdx]
+			dij := TanimotoDistance(data[dmIdx])
 			dmIdx++
 			if dij <= distThresh {
 				nbrLists[i] = append(nbrLists[i], j)
