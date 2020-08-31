@@ -5,7 +5,7 @@ import json
 import sys
 
 if __name__ == '__main__':
-    with open('__python__/files/' + sys.argv[1]) as json_file:
+    with open('__python__/' + sys.argv[1]) as json_file:
         data = json.load(json_file)
     name = data['GroupName']
     smilesGroup = data['Group']

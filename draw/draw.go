@@ -24,11 +24,11 @@ func DrawMolGroup(molsGroup []molgraph.MolecularGraph, groupName string, outputF
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile("__python__/files/" + groupName + ".json", file, 0644)
+	err = ioutil.WriteFile("__python__/" + groupName + ".json", file, 0644)
 	if err != nil {
 		return err
 	}
-	defer os.Remove("__python__/files/" + groupName + ".json")
+	defer os.Remove("__python__/" + groupName + ".json")
 
 	cmd := exec.Command("__python__/draw.py", groupName + ".json", outputFileName)
 	cmd.Stdout = os.Stdout
