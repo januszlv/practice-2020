@@ -32,7 +32,7 @@ func ReadGraphsFromSMILES(text string) []molgraph.MolecularGraph {
 	l := newLexer(text)
 	tokens := l.run()
 
-	p := newParser(tokens)
+	p := newParser(tokens, text)
 	graphs, ok := p.parse()
 	if ok {
 		log.Println("parsing done successfully!")

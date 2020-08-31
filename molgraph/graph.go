@@ -8,6 +8,7 @@ import (
 type MolecularGraph struct {
 	Atoms []Atom
 	Bonds [][]float32
+	SMILES string
 }
 
 type Atom struct {

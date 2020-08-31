@@ -10,6 +10,7 @@ import (
 
 type parser struct {
 	tokens []token
+	text string
 	currentTokenIndex int
 	currentGraph *molgraph.MolecularGraph
 	currentAtom molgraph.Atom
@@ -18,6 +19,7 @@ type parser struct {
 	branchedAtomIndexes []int
 	bondOrder float32
 	ringClosures []*ringClosureInfo
+	SMILESLineStartIndex int
 }
 
 type ringClosureInfo struct {
@@ -38,10 +40,11 @@ func (p *parser) nextToken() {
 	}
 }
 
-func newParser(tokens []token) *parser {
+func newParser(tokens []token, text string) *parser {
 	p := new(parser)
 	p.tokens = make([]token, len(tokens))
 	copy(p.tokens, tokens)
+	p.text = text
 	p.ringClosures = make([]*ringClosureInfo, 100)
 	return p
 }
@@ -67,6 +70,7 @@ func (p *parser) parseSMILES() (*molgraph.MolecularGraph, bool) {
 	p.currentGraph = new(molgraph.MolecularGraph)
 	p.currentAtomIndex = 0
 	p.atomToLinkIndex = 0
+	p.SMILESLineStartIndex = p.currentToken().start.index
 	p.parseChain()
 	for i := 0; i < len(p.ringClosures); i++ {
 		if p.ringClosures[i] != nil {
@@ -74,6 +78,7 @@ func (p *parser) parseSMILES() (*molgraph.MolecularGraph, bool) {
 		}
 	}
 	if p.currentToken().isTerminator() {
+		p.currentGraph.SMILES = p.text[p.SMILESLineStartIndex : p.currentToken().start.index]
 		p.fillValence(false)
 		p.nextToken()
 		return p.currentGraph, true
