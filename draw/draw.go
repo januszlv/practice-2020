@@ -2,6 +2,7 @@ package draw
 
 import (
 	"encoding/json"
+	"github.com/januszlv/practice-2020/molgraph"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -12,8 +13,13 @@ type MolGroup struct {
 	Group []string
 }
 
-func DrawMolGroup(smilesGroup []string, groupName string, outputFileName string) error {
-	molGroup := MolGroup{groupName, smilesGroup}
+func DrawMolGroup(molsGroup []molgraph.MolecularGraph, groupName string, outputFileName string) error {
+	var groupSmiles []string
+	for _, mol := range molsGroup {
+		groupSmiles = append(groupSmiles, mol.SMILES)
+	}
+
+	molGroup := MolGroup{groupName, groupSmiles}
 	file, err := json.Marshal(molGroup)
 	if err != nil {
 		return err
