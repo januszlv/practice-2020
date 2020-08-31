@@ -1,12 +1,15 @@
 package tests
 
-import "fmt"
+import (
+	"fmt"
+	"similaritySearcher"
+)
 
 func unitCounter(n uint64) float64 {
 	bit := uint64(1)
 	count := float64(0)
 	for bit != 0 {
-		if bit & n != 0 {
+		if bit&n != 0 {
 			count++
 		}
 		bit <<= 1
@@ -24,12 +27,13 @@ func tanimotoIdx(n, m uint64) float64 {
 	b := unitCounter(m)
 	c := unitCounter(n & m)
 
-	return c/(a + b - c)
+	return c / (a + b - c)
 }
 
 func tanimotoIdxTest(n, m uint64, res float64) bool {
 	return tanimotoIdx(n, m) == res
 }
+
 func main() {
 	fmt.Println("unitCounter test: ", unitCounterTest(13, 3))
 	fmt.Println("unitCounter test: ", unitCounterTest(4294967295, 32))
@@ -38,6 +42,16 @@ func main() {
 	fmt.Println("unitCounter test: ", unitCounterTest(8, 1))
 
 	fmt.Println("tanimotoIdx test: ", tanimotoIdxTest(13, 10, 0.25))
+
+	fp, _ := similaritySearcher.GetFingerprint("c1ccccc1")
+	fp2, _ := similaritySearcher.GetFingerprint("c1ccccc1C(=O)O")
+
+	// fmt.Println("fp is ", fp)
+
+	var fps []string
+	fps = append(fps, fp, fp2)
+
+	fmt.Println(similaritySearcher.GetTanimotoVec(fps))
 
 }
 
