@@ -2,7 +2,6 @@ package cluster
 
 import (
 	"errors"
-	"fmt"
 	"sort"
 )
 
@@ -30,13 +29,11 @@ func Cluster(data []float64, nPts int) ([][]int, error) {
 			}
 		}
 	}
-	fmt.Println(nbrLists)
 
 	var tLists [][]int
 	for x, y := range nbrLists {
 		tLists = append(tLists, []int{len(y), x})
 	}
-	fmt.Println(tLists)
 
 	sort.Slice(tLists, func(i, j int) bool {
 		diff := tLists[i][0] - tLists[j][0]
