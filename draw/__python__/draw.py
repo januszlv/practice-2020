@@ -3,9 +3,11 @@ from rdkit import Chem, DataStructs
 from rdkit.Chem import AllChem, Draw
 import json
 import sys
+import os
 
 if __name__ == '__main__':
-    with open('__python__/' + sys.argv[1]) as json_file:
+    gopath = os.getenv('GOPATH')
+    with open(gopath + '/src/practice-2020/draw/__python__/' + sys.argv[1]) as json_file:
         data = json.load(json_file)
     name = data['GroupName']
     smilesGroup = data['Group']
