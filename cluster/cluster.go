@@ -16,7 +16,7 @@ func Cluster(data []float64, nPts int) ([][]int, error) {
 		return nil, errors.New("Matrix is too long")
 	}
 
-	nbrLists := make([][]int, 14)
+	nbrLists := make([][]int, nPts)
 
 	dmIdx := 0
 	for i := 0; i < nPts; i++ {
