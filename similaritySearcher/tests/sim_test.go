@@ -2,7 +2,8 @@ package tests
 
 import (
 	"fmt"
-	"similaritySearcher"
+	"github.com/januszlv/practice-2020/similaritySearcher"
+	"testing"
 )
 
 func unitCounter(n uint64) float64 {
@@ -34,7 +35,7 @@ func tanimotoIdxTest(n, m uint64, res float64) bool {
 	return tanimotoIdx(n, m) == res
 }
 
-func main() {
+func TestSim(t *testing.T) {
 	fmt.Println("unitCounter test: ", unitCounterTest(13, 3))
 	fmt.Println("unitCounter test: ", unitCounterTest(4294967295, 32))
 	fmt.Println("unitCounter test: ", unitCounterTest(1046285, 14))
@@ -50,9 +51,6 @@ func main() {
 
 	var fps []string
 	fps = append(fps, fp, fp2)
-
-	fmt.Println(similaritySearcher.GetTanimotoVec(fps))
-
 }
 
 //1 -> 10; 10 -> 100; 101 -> 1010
